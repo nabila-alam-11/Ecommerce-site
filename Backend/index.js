@@ -141,6 +141,26 @@ app.get("/api/products/:category", async (req, res) => {
   }
 });
 
+app.post("/api/categories/:id", async (req, res) => {
+  try {
+    // Find category by ID and update it
+    const updatedCategory = await Category.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedCategory) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    res.json({ message: "Category updated successfully", updatedCategory });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Failed to update category" });
+  }
+});
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log("Server is running on PORT", PORT);
