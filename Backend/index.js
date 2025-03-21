@@ -161,6 +161,26 @@ app.post("/api/categories/:id", async (req, res) => {
   }
 });
 
+// Filter products
+app.get("/products/search", async (req, res) => {
+  const query = req.query.q;
+
+  if (!query) {
+    return res.json([]);
+  }
+
+  const searchWords = query.toLowerCase().split(" ");
+
+  const allProducts = await Product.find();
+
+  const filteredProducts = allProducts.filter((product) => {
+    return searchWords.some((word) =>
+      product.name.toLowerCase().includes(word)
+    );
+  });
+  res.json(filteredProducts);
+});
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log("Server is running on PORT", PORT);
