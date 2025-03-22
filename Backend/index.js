@@ -166,30 +166,56 @@ app.get("/api/products/search/result", async (req, res) => {
   try {
     const query = req.query.q;
     if (!query) {
-      return res.json([]);
+      return res.json({ message: "No such product found" });
     }
 
     const searchWords = query.toLowerCase().split(" ");
-    const categoryKeywords = ["women", "men", "kids"]; // Keywords to match category
+    const categoryKeywords = ["women", "men", "kids"];
 
-    // Find products and populate category names
-    let products = await Product.find().populate("category", "name");
-
-    // Check if the query contains a category keyword
+    // Extract category keyword if present
     const matchedCategory = categoryKeywords.find((keyword) =>
       searchWords.includes(keyword)
     );
 
+    let products = [];
+
     if (matchedCategory) {
-      // Filter products that belong to the matched category
-      products = products.filter((product) =>
-        product.category?.name.toLowerCase().includes(matchedCategory)
+      // Remove category keyword from search query
+      const remainingWords = searchWords.filter(
+        (word) => word !== matchedCategory
       );
+
+      // Find category in the database
+      const category = await Category.findOne({
+        name: new RegExp(`^${matchedCategory}$`, "i"),
+      });
+
+      if (category) {
+        // Get products only from the matched category
+        products = await Product.find({ category: category._id }).populate(
+          "category",
+          "name"
+        );
+
+        // Filter further based on remaining words
+        if (remainingWords.length > 0) {
+          products = products.filter((product) =>
+            remainingWords.some((word) =>
+              product.name.toLowerCase().includes(word)
+            )
+          );
+        }
+      }
     } else {
-      // If no category keyword is found, filter products by name
-      products = products.filter((product) =>
+      // If no category keyword, search by product name across all categories
+      const allProducts = await Product.find().populate("category", "name");
+      products = allProducts.filter((product) =>
         searchWords.some((word) => product.name.toLowerCase().includes(word))
       );
+    }
+
+    if (products.length === 0) {
+      return res.json({ message: "No such product found" });
     }
 
     res.json(products);
