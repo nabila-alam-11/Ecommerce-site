@@ -6,9 +6,10 @@ const SearchResult = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    console.log(searchQuery);
     if (searchQuery) {
       fetch(
-        `https://ecommerce-site-backend-virid.vercel.app/api/products?search=${searchQuery}`
+        `https://ecommerce-site-backend-virid.vercel.app/products/search?q=${searchQuery}`
       )
         .then((res) => res.json())
         .then((data) => setProducts(data))

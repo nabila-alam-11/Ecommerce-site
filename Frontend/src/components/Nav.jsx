@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useShopContext from "../contexts/ShopContext";
 import { useState } from "react";
 
@@ -6,12 +6,13 @@ const Nav = () => {
   const { wishlist, cart, setSearchQuery } = useShopContext();
   const [input, setInput] = useState("");
   const navigate = useNavigate();
+  const { productName } = useParams();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (input.trim()) {
       setSearchQuery(input);
-      navigate("/search");
+      navigate(`/products/search?q=${productName}`);
     }
   };
   return (
