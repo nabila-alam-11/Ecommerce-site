@@ -9,7 +9,7 @@ const SearchResult = () => {
     console.log(searchQuery);
     if (searchQuery) {
       fetch(
-        `https://ecommerce-site-backend-virid.vercel.app/products/search?q=${searchQuery}`
+        `https://ecommerce-site-backend-virid.vercel.app/api/products/search/result?q=${searchQuery}`
       )
         .then((res) => res.json())
         .then((data) => setProducts(data))

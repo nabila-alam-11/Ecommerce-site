@@ -122,9 +122,9 @@ app.get("/api/products/:productId", async (req, res) => {
   }
 });
 
-app.get("/api/products/:category", async (req, res) => {
+app.get("/api/products/category:categoryName", async (req, res) => {
   try {
-    const category = await Category.findOne({ name: req.params.category });
+    const category = await Category.findOne({ name: req.params.categoryName });
     if (!category) {
       console.log(category);
       return res.status(404).json({ error: "Category not found" });
@@ -163,22 +163,31 @@ app.post("/api/categories/:id", async (req, res) => {
 
 // Filter products
 app.get("/api/products/search/result", async (req, res) => {
-  const query = req.query.q;
+  try {
+    const query = req.query.q;
+    if (!query) {
+      return res.json([]);
+    }
 
-  if (!query) {
-    return res.json([]);
+    const searchWords = query.toLowerCase().split(" ");
+
+    // Find products that match any word in either name or category
+    const products = await Product.find().populate("category", "name");
+
+    const filteredProducts = products.filter((product) => {
+      const productName = product.name.toLowerCase();
+      const categoryName = product.category?.name.toLowerCase() || "";
+
+      return searchWords.some(
+        (word) => productName.includes(word) || categoryName.includes(word)
+      );
+    });
+
+    res.json(filteredProducts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch products" });
   }
-
-  const searchWords = query.toLowerCase().split(" ");
-
-  const allProducts = await Product.find();
-
-  const filteredProducts = allProducts.filter((product) => {
-    return searchWords.some((word) =>
-      product.name.toLowerCase().includes(word)
-    );
-  });
-  res.json(filteredProducts);
 });
 
 const PORT = process.env.PORT;
