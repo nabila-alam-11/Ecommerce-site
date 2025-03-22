@@ -162,7 +162,7 @@ app.post("/api/categories/:id", async (req, res) => {
 });
 
 // Filter products
-app.get("api/products/search/result", async (req, res) => {
+app.get("/api/products/search/result", async (req, res) => {
   const query = req.query.q;
 
   if (!query) {
