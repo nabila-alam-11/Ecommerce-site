@@ -170,20 +170,29 @@ app.get("/api/products/search/result", async (req, res) => {
     }
 
     const searchWords = query.toLowerCase().split(" ");
+    const categoryKeywords = ["women", "men", "kids"]; // Keywords to match category
 
-    // Find products that match any word in either name or category
-    const products = await Product.find().populate("category", "name");
+    // Find products and populate category names
+    let products = await Product.find().populate("category", "name");
 
-    const filteredProducts = products.filter((product) => {
-      const productName = product.name.toLowerCase();
-      const categoryName = product.category?.name.toLowerCase() || "";
+    // Check if the query contains a category keyword
+    const matchedCategory = categoryKeywords.find((keyword) =>
+      searchWords.includes(keyword)
+    );
 
-      return searchWords.some(
-        (word) => productName.includes(word) || categoryName.includes(word)
+    if (matchedCategory) {
+      // Filter products that belong to the matched category
+      products = products.filter((product) =>
+        product.category?.name.toLowerCase().includes(matchedCategory)
       );
-    });
+    } else {
+      // If no category keyword is found, filter products by name
+      products = products.filter((product) =>
+        searchWords.some((word) => product.name.toLowerCase().includes(word))
+      );
+    }
 
-    res.json(filteredProducts);
+    res.json(products);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch products" });
