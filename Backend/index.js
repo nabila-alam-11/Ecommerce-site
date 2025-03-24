@@ -210,7 +210,7 @@ app.get("/api/products/search/result", async (req, res) => {
 
       if (category) {
         products = await Product.find({ category: category._id }).populate(
-          "Category",
+          "category",
           "name"
         );
 
@@ -223,7 +223,7 @@ app.get("/api/products/search/result", async (req, res) => {
         }
       }
     } else {
-      const allProducts = await Product.find().populate("Category", "name");
+      const allProducts = await Product.find().populate("category", "name");
       products = allProducts.filter((product) =>
         searchWords.some((word) => product.name.toLowerCase().includes(word))
       );
