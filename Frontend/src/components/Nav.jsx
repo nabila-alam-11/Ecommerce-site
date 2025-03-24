@@ -12,7 +12,7 @@ const Nav = () => {
     e.preventDefault();
     if (input.trim()) {
       setSearchQuery(input);
-      navigate(`/products/search/result?q=${productName}`);
+      navigate(`/products/search/result?q=${input}`);
     }
   };
   return (
