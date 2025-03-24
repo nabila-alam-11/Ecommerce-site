@@ -165,83 +165,48 @@ app.get("/api/products/search/result", async (req, res) => {
   try {
     const query = req.query.q;
     if (!query) {
-      return res.json({ message: "No such product found." });
+      return res.json({ message: "No such product found" });
     }
 
     const searchWords = query.toLowerCase().split(" ");
+    const categoryKeywords = ["women", "men", "kids"];
 
-    const categorySynonyms = {
-      men: ["man", "men", "gents", "gent"],
-      women: ["woman", "women", "lady", "ladies"],
-      boys: ["boy", "boys"],
-      girls: ["girl", "girls"],
-      kids: ["kid", "kids"],
-    };
-
-    const colors = [
-      "white",
-      "black",
-      "green",
-      "yellow",
-      "purple",
-      "grey",
-      "gray",
-      "red",
-      "pink",
-      "orange",
-      "lightgreen",
-      "brown",
-      "blue",
-    ];
-
-    let categoryFilter = null;
-    let color = null;
-    let nameKeywords = [];
-
-    searchWords.forEach((word) => {
-      for (let key in categorySynonyms) {
-        if (categorySynonyms[key].includes(word)) {
-          categoryFilter = key;
-        }
-      }
-      if (colors.includes(word)) {
-        color = word;
-      }
-      if (!categoryFilter && !colors.includes(word)) {
-        nameKeywords.push(word);
-      }
-    });
-
-    if (searchWords.includes("kid") || searchWords.includes("kids")) {
-      if (searchWords.includes("girl") || searchWords.includes("girls")) {
-        categoryFilter = "girls";
-      } else if (searchWords.includes("boy") || searchWords.includes("boys")) {
-        categoryFilter = "boys";
-      }
-    }
+    // Extract category keyword if present
+    const matchedCategory = categoryKeywords.find((keyword) =>
+      searchWords.includes(keyword)
+    );
 
     let products = [];
 
-    if (categoryFilter) {
+    if (matchedCategory) {
+      // Remove category keyword from search query
+      const remainingWords = searchWords.filter(
+        (word) => word !== matchedCategory
+      );
+
+      // Find category in the database
       const category = await Category.findOne({
-        name: new RegExp(`^${categoryFilter}$`, "i"),
+        name: new RegExp(`^${matchedCategory}$`, "i"),
       });
 
       if (category) {
+        // Get products only from the matched category
         products = await Product.find({ category: category._id }).populate(
           "category",
           "name"
         );
 
-        if (nameKeywords.length > 0) {
+        // Filter further based on remaining words
+        if (remainingWords.length > 0) {
           products = products.filter((product) =>
-            nameKeywords.some((word) =>
+            remainingWords.some((word) =>
               product.name.toLowerCase().includes(word)
             )
           );
         }
       }
     } else {
+      // If no category keyword, search by product name across all categories
       const allProducts = await Product.find().populate("category", "name");
       products = allProducts.filter((product) =>
         searchWords.some((word) => product.name.toLowerCase().includes(word))
@@ -249,11 +214,12 @@ app.get("/api/products/search/result", async (req, res) => {
     }
 
     if (products.length === 0) {
-      return res.json({ message: "No such product found." });
+      return res.json({ message: "No such product found" });
     }
+
     res.json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error(error);
     res.status(500).json({ error: "Failed to fetch products" });
   }
 });
