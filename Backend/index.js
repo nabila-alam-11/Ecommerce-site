@@ -171,14 +171,31 @@ app.get("/api/products/search/result", async (req, res) => {
     const searchWords = query.toLowerCase().split(" ");
 
     const categorySynonyms = {
-      men: ["man", "men", "gents"],
+      men: ["man", "men", "gents", "gent"],
       women: ["woman", "women", "lady", "ladies"],
       boys: ["boy", "boys"],
       girls: ["girl", "girls"],
       kids: ["kid", "kids"],
     };
 
+    const colors = [
+      "white",
+      "black",
+      "green",
+      "yellow",
+      "purple",
+      "grey",
+      "gray",
+      "red",
+      "pink",
+      "orange",
+      "lightgreen",
+      "brown",
+      "blue",
+    ];
+
     let categoryFilter = null;
+    let color = null;
     let nameKeywords = [];
 
     searchWords.forEach((word) => {
@@ -187,8 +204,10 @@ app.get("/api/products/search/result", async (req, res) => {
           categoryFilter = key;
         }
       }
-
-      if (!categoryFilter) {
+      if (colors.includes(word)) {
+        color = word;
+      }
+      if (!categoryFilter && !colors.includes(word)) {
         nameKeywords.push(word);
       }
     });
