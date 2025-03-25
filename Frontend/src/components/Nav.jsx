@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useShopContext from "../contexts/ShopContext";
 import { useState } from "react";
+import SearchBar from "./SearchBar";
 
 const Nav = () => {
   const { wishlist, cart, setSearchQuery } = useShopContext();
@@ -40,19 +41,7 @@ const Nav = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav my-4 mx-auto">
-            <form
-              className="nav-item"
-              onSubmit={handleSearch}
-              style={{ width: "30rem" }}
-            >
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search for products..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
-            </form>
+            <SearchBar />
           </ul>
           <ul className="navbar-nav d-flex align-items-lg-center gap-4">
             <li className="nav-item">

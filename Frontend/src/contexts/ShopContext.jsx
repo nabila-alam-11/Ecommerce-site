@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useFetch from "../useFetch";
 
 const ShopContext = createContext();
 const useShopContext = () => useContext(ShopContext);
@@ -6,6 +7,7 @@ const useShopContext = () => useContext(ShopContext);
 export default useShopContext;
 
 export function ShopProvider({ children }) {
+  // WISHLIST
   const [wishlist, setWishlist] = useState(() => {
     return JSON.parse(localStorage.getItem("wishlist")) || [];
   });
@@ -13,6 +15,7 @@ export function ShopProvider({ children }) {
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
+
   const toggleWishlist = (productId) => {
     setWishlist((prevWishlist) => {
       if (prevWishlist.includes(productId)) {
@@ -22,12 +25,14 @@ export function ShopProvider({ children }) {
       }
     });
   };
+
   const removeItemFromWishlist = (productId) => {
     setWishlist((prevWishlist) => {
       return prevWishlist.filter((id) => id !== productId);
     });
   };
 
+  // CART
   const [cart, setCart] = useState(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   });
@@ -63,8 +68,23 @@ export function ShopProvider({ children }) {
     setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
   };
 
-  // Search
+  // SEARCH
+  const { data } = useFetch(
+    "https://ecommerce-site-backend-virid.vercel.app/api/products"
+  );
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const filterProducts = (query) => {
+    setSearchQuery(query);
+    if (!query) {
+      setFilteredProducts([]);
+    } else {
+      const filtered = data?.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+  };
 
   return (
     <ShopContext.Provider
@@ -78,6 +98,8 @@ export function ShopProvider({ children }) {
         updateCartQuantity,
         searchQuery,
         setSearchQuery,
+        filterProducts,
+        filteredProducts,
       }}
     >
       {children}
