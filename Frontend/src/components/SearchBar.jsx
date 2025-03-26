@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const { filterProducts } = useShopContext();
-  console.log(query);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
-      filterProducts(query);
+      e.preventDefault();
       navigate(`/products/search?q=${query}`);
     }
   };

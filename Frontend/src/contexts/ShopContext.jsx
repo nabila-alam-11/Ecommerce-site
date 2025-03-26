@@ -69,21 +69,68 @@ export function ShopProvider({ children }) {
   };
 
   // SEARCH
-  const { data } = useFetch(
+  const { data: products } = useFetch(
     "https://ecommerce-site-backend-virid.vercel.app/api/products"
   );
+  const { data: categoriesData } = useFetch(
+    "https://ecommerce-site-backend-virid.vercel.app/api/categories"
+  );
+
+  const [categories, setCategories] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+
+  // Store fetched data in state so it persists across pages
+  useEffect(() => {
+    if (categoriesData) setCategories(categoriesData);
+  }, [categoriesData]);
+
+  useEffect(() => {
+    if (products) setAllProducts(products);
+  }, [products]);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+
   const filterProducts = (query) => {
-    setSearchQuery(query);
-    if (!query) {
-      setFilteredProducts([]);
-    } else {
-      const filtered = data?.filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredProducts(filtered);
+    if (!allProducts.length) return;
+
+    query = query.toLowerCase().trim();
+
+    // Define category keywords mapping
+    const categoryKeywords = {
+      men: ["men", "man", "gent", "gents"],
+      women: ["women", "woman", "lady", "ladies"],
+      kids: ["kids", "kid", "children", "boys", "girls"],
+    };
+
+    let matchedCategory = null;
+
+    // Check if the query contains category keywords
+    for (const category in categoryKeywords) {
+      if (categoryKeywords[category].some((word) => query.includes(word))) {
+        matchedCategory = category; // Store category as lowercase
+        break;
+      }
     }
+
+    let filtered = allProducts.filter((product) => {
+      const productName = product.name.toLowerCase();
+      const productCategory = product.category.name.toLowerCase(); // Ensure category name is lowercase
+
+      const nameMatches = query
+        .split(" ")
+        .some((word) => productName.includes(word));
+
+      if (matchedCategory) {
+        // Ensure category name matches expected names from API
+        return productCategory.includes(matchedCategory) && nameMatches;
+      }
+
+      // If no category detected, search normally by product name
+      return nameMatches;
+    });
+
+    setFilteredProducts(filtered);
   };
 
   return (

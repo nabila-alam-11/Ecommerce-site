@@ -16,6 +16,7 @@ app.use(express.json());
 initializeDatabase();
 const { Category } = require("./models/category.model");
 const { Product } = require("./models/product.model");
+const { Address } = require("./models/address.model");
 
 app.get("/", (req, res) => {
   res.send("Welcome!!");
@@ -161,7 +162,120 @@ app.post("/api/categories/:id", async (req, res) => {
   }
 });
 
+// ADDRESS
 
+const newAddress = {
+  fullName: "Aisha Khan",
+  email: "aisha.khan@example.com",
+  phoneNumber: "9876543210",
+  street: "123 Main Street, Apt 4B",
+  landmark: "Near City Mall",
+  city: "New Delhi",
+  state: "Delhi",
+  pinCode: "110001",
+  isDefault: true,
+};
+
+async function createAddress(newAddress) {
+  try {
+    const address = new Address(newAddress);
+    const saveAddress = await address.save();
+    return saveAddress;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// createAddress(newAddress);
+
+app.post("/address", async (req, res) => {
+  try {
+    const saveAddress = await createAddress(req.body);
+    res.status(201).json({
+      success: true,
+      message: "Address added successfully",
+      Address: saveAddress,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+async function readAllAddress() {
+  try {
+    const addresses = await Address.find();
+    return addresses;
+  } catch (error) {
+    throw error;
+  }
+}
+
+app.get("/address", async (req, res) => {
+  try {
+    const addresses = await readAllAddress();
+    if (addresses.length != 0) {
+      res.json(addresses);
+    } else {
+      res.status(404).json({ error: "Addresses not found." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch events." });
+  }
+});
+
+async function updateAddress(addressId, dataToUpdated) {
+  try {
+    const updatedAddress = await Address.findByIdAndUpdate(
+      addressId,
+      dataToUpdated,
+      { new: true }
+    );
+    return updatedAddress;
+  } catch (error) {
+    console.log("Error in updating address: ", error.message);
+  }
+}
+
+app.post("/address/:addressId", async (req, res) => {
+  try {
+    const updatedAddress = await updateAddress(req.params.addressId, req.body);
+    if (updateAddress) {
+      res
+        .status(200)
+        .json({ message: "Address updated successfully.", updatedAddress });
+    } else {
+      res.status(404).json({ error: "Address not found." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update address" });
+  }
+});
+
+// DELETE
+async function deleteAddressById(addressId) {
+  try {
+    const deletedAddress = await Address.findByIdAndDelete(addressId);
+    return deletedAddress;
+  } catch (error) {
+    console.log("Error in deleting address: ", error);
+  }
+}
+
+app.delete("/address/:addressId", async (req, res) => {
+  try {
+    const deletedAddress = await deleteAddressById(req.params.addressId);
+    if (deletedAddress) {
+      res
+        .status(200)
+        .json({ message: "Address deleted successfully.", deletedAddress });
+    } else {
+      res.status(404).json({ error: "Address not found." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete address." });
+  }
+});
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log("Server is running on PORT", PORT);

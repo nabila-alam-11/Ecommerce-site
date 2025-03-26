@@ -1,51 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useShopContext from "../contexts/ShopContext";
 import Nav from "./Nav";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const SearchResult = () => {
-  const { searchQuery, setSearchQuery, wishlist, toggleWishlist } =
-    useShopContext(); // Get searchQuery from ShopProvider
-  const [products, setProducts] = useState([]);
+  const {
+    filteredProducts,
+    filterProducts,
+    toggleWishlist,
+    addToCart,
+    wishlist,
+  } = useShopContext();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q");
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get("q");
-
     if (query) {
-      setSearchQuery(query);
-      fetch(
-        `https://ecommerce-site-backend-virid.vercel.app/api/products/search/result?q=${query}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (Array.isArray(data)) {
-            setProducts(data);
-          } else {
-            setProducts([]);
-          }
-        })
-        .catch((err) => console.error(err));
+      filterProducts(query);
     }
-  }, [location.search, searchQuery]);
-
-  const upperCaseSearchQuery = searchQuery
-    .split("  ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-
+  }, [query]);
   return (
     <>
       <Nav />
       <main className="py-4 container">
         <h3>
-          {upperCaseSearchQuery}{" "}
+          {query}
           <span style={{ fontSize: "1rem" }} className="text-secondary">
-            • {products.length} {products.length > 1 ? "Items" : "Item"}
+            •{filteredProducts?.length}{" "}
+            {filteredProducts?.length > 1 ? "Items" : "Item"}
           </span>
         </h3>
         <div className="row gap-4">
-          {products?.map((product) => {
+          {filteredProducts?.map((product) => {
             const discountedPrice = Math.round(
               product.price - (product.price * product.discount) / 100
             );
