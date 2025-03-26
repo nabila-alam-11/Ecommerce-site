@@ -168,12 +168,12 @@ const newAddress = {
   fullName: "Aisha Khan",
   email: "aisha.khan@example.com",
   phoneNumber: "9876543210",
-  street: "123 Main Street, Apt 4B",
-  landmark: "Near City Mall",
-  city: "New Delhi",
-  state: "Delhi",
-  pinCode: "110001",
-  isDefault: true,
+  street: "456 Main Street, Apt 5C",
+  landmark: "Near Government Hospital",
+  city: "Bulandshahr",
+  state: "UP",
+  pinCode: "203001",
+  isDefault: false,
 };
 
 async function createAddress(newAddress) {
