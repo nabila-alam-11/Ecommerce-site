@@ -91,3 +91,38 @@ body {
   text-align: center;
   border-radius: 7px;
 }
+
+/* CHECKOUT */
+.shadow-sm {
+  box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1), 0px 4px 10px rgba(0, 0, 0, 0.15); /* Adds top and bottom shadow */
+  background-color: var(
+    --bs-body-bg,
+    #fff
+  ); /* Ensures compatibility with Bootstrap */
+  border-radius: 10px;
+  padding: 16px;
+  transition: box-shadow 0.3s ease-in-out;
+  background-color: #fff;
+}
+
+.shadow-sm:hover {
+  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.15), 0px 6px 14px rgba(0, 0, 0, 0.2); /* Enhances shadow on hover */
+}
+.btn-address {
+  background-color: #fff;
+  border: 1px solid #000;
+  padding-inline: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: black;
+  transition: all 0.8s ease;
+}
+.btn-address:hover {
+  background-color: black;
+  color: white;
+  border: none;
+}
+.new-address:hover {
+  background-color: white;
+  transition: all 0.5s ease-out;
+}

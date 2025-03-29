@@ -12,6 +12,7 @@ import Wishlist from "./pages/Wishlist.jsx";
 import Cart from "./pages/Cart.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import SearchResult from "./components/SearchResult.jsx";
+import { AddressProvider } from "./contexts/AddressContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ShopProvider>
-      <RouterProvider router={router} />
+      <AddressProvider>
+        <RouterProvider router={router} />
+      </AddressProvider>
     </ShopProvider>
   </StrictMode>
 );

@@ -175,7 +175,6 @@ const newAddress = {
   pinCode: "203001",
   isDefault: false,
 };
-
 async function createAddress(newAddress) {
   try {
     const address = new Address(newAddress);
@@ -186,7 +185,7 @@ async function createAddress(newAddress) {
   }
 }
 
-// createAddress(newAddress);
+createAddress(newAddress);
 
 app.post("/address", async (req, res) => {
   try {

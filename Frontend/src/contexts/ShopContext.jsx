@@ -133,10 +133,6 @@ export function ShopProvider({ children }) {
     setFilteredProducts(filtered);
   };
 
-  // ADDRESS
-
-  const [addresses, setAddresses] = useState([]);
-
   return (
     <ShopContext.Provider
       value={{
