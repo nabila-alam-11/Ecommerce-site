@@ -8,9 +8,10 @@ const Checkout = () => {
   const { data, loading } = useFetch(
     "https://ecommerce-site-backend-virid.vercel.app/address"
   );
-  const { addresses, removeAddress } = useAddressContext();
+  const { addresses, removeAddress, editAddress, selectEditAddress } =
+    useAddressContext();
   const [selectedAddress, setSelectedAddress] = useState("");
-  const [editAddress, setEditAddress] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     if (addresses?.length > 0) {
@@ -20,22 +21,20 @@ const Checkout = () => {
       if (defaultAddress) {
         setSelectedAddress(defaultAddress._id);
       } else {
-        setSelectedAddress(data[0]._id);
+        setSelectedAddress(data[0]?._id);
       }
     }
-  }, [addresses]);
+  }, [addresses, data]);
 
   const handleAddressChange = (event) => {
     setSelectedAddress(event.target.value);
   };
 
-  const handleEdit = (address) => {
-    setEditAddress(address);
-    const editModal = new bootstrap.Modal(
-      document.getElementById("editAddressModal")
-    );
-    editModal.show();
+  const handleEditClick = (address) => {
+    selectEditAddress(address);
+    setShowEditForm(true);
   };
+
   return (
     <>
       <Nav />
@@ -94,7 +93,10 @@ const Checkout = () => {
                     </button>
                     <button
                       className="btn-address"
-                      onClick={() => handleEdit(address)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleEditClick(address);
+                      }}
                     >
                       EDIT
                     </button>
@@ -120,32 +122,19 @@ const Checkout = () => {
           )}
         </div>
       </main>
-      <AddressForm />
-      <div
-        className="modal fade"
-        id="editAddressModal"
-        tabIndex="-1"
-        aria-labelledby="editAddressModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
+      {showEditForm && (
+        <div className="modal-overlay">
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Edit Address</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              {editAddress && <AddressForm address={editAddress} />}
-            </div>
+            <AddressForm
+              onClose={() => {
+                setShowEditForm(false);
+              }}
+            />
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
+
 export default Checkout;

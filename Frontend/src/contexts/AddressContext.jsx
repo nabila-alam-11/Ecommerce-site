@@ -12,6 +12,7 @@ export function AddressProvider({ children }) {
     "https://ecommerce-site-backend-virid.vercel.app/address"
   );
   const [addresses, setAddresses] = useState([]);
+  const [editAddress, setEditAddress] = useState(null);
 
   useEffect(() => {
     if (addressData) {
@@ -42,8 +43,29 @@ export function AddressProvider({ children }) {
       throw error;
     }
   };
+
+  const selectEditAddress = (address) => {
+    setEditAddress(address);
+  };
+
+  const updateAddress = (updatedAddress) => {
+    setAddresses((prevAddress) =>
+      prevAddress.map((addr) =>
+        addr._id === updatedAddress._d ? updatedAddress : addr
+      )
+    );
+    setEditAddress(null);
+  };
   return (
-    <AddressContext.Provider value={{ addresses, removeAddress }}>
+    <AddressContext.Provider
+      value={{
+        addresses,
+        removeAddress,
+        selectEditAddress,
+        editAddress,
+        updateAddress,
+      }}
+    >
       {children}
     </AddressContext.Provider>
   );

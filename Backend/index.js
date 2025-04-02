@@ -185,7 +185,7 @@ async function createAddress(newAddress) {
   }
 }
 
-createAddress(newAddress);
+// createAddress(newAddress);
 
 app.post("/address", async (req, res) => {
   try {
@@ -236,10 +236,10 @@ async function updateAddress(addressId, dataToUpdated) {
   }
 }
 
-app.post("/address/:addressId", async (req, res) => {
+app.put("/address/:addressId", async (req, res) => {
   try {
     const updatedAddress = await updateAddress(req.params.addressId, req.body);
-    if (updateAddress) {
+    if (updatedAddress) {
       res
         .status(200)
         .json({ message: "Address updated successfully.", updatedAddress });
