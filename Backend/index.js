@@ -17,6 +17,7 @@ initializeDatabase();
 const { Category } = require("./models/category.model");
 const { Product } = require("./models/product.model");
 const { Address } = require("./models/address.model");
+const { Order } = require("./models/order.model");
 
 app.get("/", (req, res) => {
   res.send("Welcome!!");
@@ -210,7 +211,7 @@ async function readAllAddress() {
   }
 }
 
-app.get("/address", async (req, res) => {
+app.get("/api/address", async (req, res) => {
   try {
     const addresses = await readAllAddress();
     if (addresses.length != 0) {
@@ -275,6 +276,128 @@ app.delete("/address/:addressId", async (req, res) => {
     res.status(500).json({ error: "Failed to delete address." });
   }
 });
+
+// ORDER
+
+const newOrder = {
+  address: {
+    fullName: "Aisha Khan",
+    email: "aisha.khan@example.com",
+    phoneNumber: "9876543210",
+    street: "456 Main Street, Apt 5C",
+    landmark: "Near Government Hospital",
+    city: "Bulandshahr",
+    state: "UP",
+    pinCode: "203001",
+    isDefault: false,
+  },
+  items: [
+    {
+      product: "67cd5240f4f190c8f37908d8", // product ObjectId
+      quantity: 2,
+      price: 299,
+    },
+    {
+      product: "67cd536cf4f190c8f37908db", // another product ObjectId
+      quantity: 1,
+      price: 499,
+    },
+  ],
+};
+
+async function createOrder(newOrder) {
+  try {
+    const totalPrice = newOrder.items.reduce(
+      (sum, item) => sum + item.quantity * item.price,
+      0
+    );
+
+    const order = new Order({
+      address: newOrder.address,
+      items: newOrder.items,
+      totalPrice,
+    });
+    const saveOrder = await order.save();
+    return await saveOrder.populate("items.product");
+  } catch (error) {
+    throw error;
+  }
+}
+createOrder(newOrder);
+app.post("/api/orders", async (req, res) => {
+  try {
+    const savedOrder = await createOrder(req.body);
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order: savedOrder,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Failed to place order." });
+  }
+});
+
+async function readAllOrders() {
+  try {
+    const orders = await Order.find()
+      .populate("address")
+      .populate("items.product");
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function deleteOrder(orderId) {
+  try {
+    const deletedOrder = await Order.findByIdAndDelete(orderId);
+    return deleteOrder;
+  } catch (error) {
+    throw error;
+  }
+}
+app.post("/api/orders", async (req, res) => {
+  try {
+    const savedOrder = await createOrder(req.body);
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order: savedOrder,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Failed to place order." });
+  }
+});
+
+app.get("/api/orders", async (req, res) => {
+  try {
+    const orders = await readAllOrders();
+    if (orders.length !== 0) {
+      res.json(orders);
+    } else {
+      res.status(404).json({ error: "No orders found." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch orders." });
+  }
+});
+
+app.delete("/api/orders/:orderId", async (req, res) => {
+  try {
+    const deletedOrder = await deleteOrder(req.params.orderId);
+    if (deletedOrder) {
+      res.json({ succes: true, message: "Order deleted successfully." });
+    } else {
+      res.status(404).json({ error: "Order not found." });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Failed to delete order." });
+  }
+});
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log("Server is running on PORT", PORT);

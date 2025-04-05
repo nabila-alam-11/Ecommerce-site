@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAddressContext from "../contexts/AddressContext";
 
 const AddressForm = ({ existingAddress, onClose }) => {
-  const { updateAddress } = useAddressContext();
+  const { updateAddress, createNewAddress } = useAddressContext();
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -15,7 +15,6 @@ const AddressForm = ({ existingAddress, onClose }) => {
     isDefault: false,
   });
   console.log(formData);
-
   // Autofill form when editing
   useEffect(() => {
     if (existingAddress) {
@@ -33,9 +32,9 @@ const AddressForm = ({ existingAddress, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (existingAddress) {
-      try {
+    updateAddress(formData);
+    try {
+      if (existingAddress) {
         const response = await fetch(
           `https://ecommerce-site-backend-virid.vercel.app/address/${existingAddress._id}`,
           {
@@ -50,12 +49,14 @@ const AddressForm = ({ existingAddress, onClose }) => {
         }
 
         const updatedAddress = await response.json();
-        updateAddress(updatedAddress); // Update context
-      } catch (error) {
-        console.error("Error updating address:", error);
-      }
+        updateAddress(updatedAddress);
+      } else {
+        createNewAddress(formData);
+      } // Update context
+      onClose(); // Close modal
+    } catch (error) {
+      console.error("Error updating address:", error);
     }
-    onClose(); // Close modal
   };
 
   return (

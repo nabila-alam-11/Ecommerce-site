@@ -31,6 +31,8 @@ const CategoryPage = () => {
   const [minRating, setMinRating] = useState(0);
   const [sortByPrice, setSortByPrice] = useState("");
   const [filterByBrand, setFilterByBrand] = useState([]);
+  const [productAddededToCart, setProductAddedToCart] = useState(false);
+  const [productAddedToWishlist, setProductAddedToWishlist] = useState(true);
 
   const minProductPrice =
     productData?.length > 0
@@ -78,11 +80,37 @@ const CategoryPage = () => {
     brandsInput.forEach((input) => (input.checked = false));
     setFilterByBrand([]);
   };
+  // background: black;
+  //   color: white;
+  //   width: 12rem;
+  //   padding-inline: 5px;
+  //   text-align: center;
+  //   border-radius: 3px;
+  //   padding-block: 2px;
+  //   /* justify-self: end; */
+  //   justify-self: end;
+  //   margin-right: 1rem;
 
   return (
     <>
       <Nav />
-
+      {productAddededToCart && (
+        <p
+          style={{
+            background: "black",
+            color: "white",
+            width: "12rem",
+            paddingInline: "5px",
+            textAlign: "center",
+            borderRadius: "3px",
+            paddingBlock: "2px",
+            justifySelf: "end",
+            marginRight: "1rem",
+          }}
+        >
+          Product added to cart
+        </p>
+      )}
       {!productLoading ? (
         <main>
           <div className="d-flex">
@@ -306,6 +334,10 @@ const CategoryPage = () => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 addToCart(product);
+                                setProductAddedToCart(true);
+                                setTimeout(() => {
+                                  setProductAddedToCart(false);
+                                }, 1000);
                               }}
                             >
                               Add to Cart
