@@ -8,16 +8,11 @@ import AddressForm from "./AddressForm";
 
 const Checkout = () => {
   const { data, loading } = useFetch(
-    "https://ecommerce-site-backend-virid.vercel.app/address"
+    "https://ecommerce-site-backend-virid.vercel.app/api/address"
   );
-  const {
-    addresses,
-    removeAddress,
-    editAddress,
-    selectEditAddress,
-    createNewAddress,
-    newAddress,
-  } = useAddressContext();
+  const { addresses, removeAddress, editAddress, selectEditAddress } =
+    useAddressContext();
+  console.log(addresses);
 
   const [selectedAddress, setSelectedAddress] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);
@@ -25,19 +20,14 @@ const Checkout = () => {
 
   useEffect(() => {
     if (addresses?.length > 0) {
-      const defaultAddress = addresses.find(
-        (address) => address.isDefault === true
-      );
-      if (newAddress) {
-        setSelectedAddress(newAddress._id);
-      }
+      const defaultAddress = addresses.find((address) => address.isDefault);
       if (defaultAddress) {
         setSelectedAddress(defaultAddress._id);
       } else {
-        setSelectedAddress(data?._id);
+        setSelectedAddress(addresses[0]._id);
       }
     }
-  }, [addresses, newAddress]);
+  }, [addresses]);
 
   const handleAddressChange = (event) => {
     setSelectedAddress(event.target.value);
@@ -51,8 +41,7 @@ const Checkout = () => {
     setShowNewForm(true);
   };
 
-  const { cart, toggleWishlist, removeFromCart, wishlist, updateCartQuantity } =
-    useShopContext();
+  const { cart } = useShopContext();
   const totalPrice = cart?.reduce((acc, product) => {
     return product.discount
       ? acc +
@@ -205,19 +194,33 @@ const Checkout = () => {
                 </div>
                 <hr />
                 <p>You will save ₹{totalDiscount} on this order</p>
-                <Link to="/checkout/address">
+                <Link to="/order/success">
                   <button
                     className="btn btn-primary"
                     style={{ width: "100%", letterSpacing: "1px" }}
                   >
-                    PLACE ORDER
+                    CONFIRM ORDER
                   </button>
                 </Link>
               </div>{" "}
             </>
           ) : (
             <div style={{ width: "45%" }}>
-              <h3 className="mb-4">ADD NEW ADDRESS</h3>
+              <button
+                className="text-danger new-address"
+                style={{
+                  fontWeight: "bold",
+                  border: "2px dashed gray",
+                  width: "18.5rem",
+                  paddingBlock: "10px",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNewAddressClick();
+                }}
+              >
+                + ADD NEW ADDRESS
+              </button>{" "}
             </div>
           )}
         </div>

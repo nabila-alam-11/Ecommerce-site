@@ -13,6 +13,8 @@ import Cart from "./pages/Cart.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import SearchResult from "./components/SearchResult.jsx";
 import { AddressProvider } from "./contexts/AddressContext.jsx";
+import SuccessOrder from "./pages/SuccessOrder.jsx";
+import Orders from "./pages/Orders.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
   {
     path: "/products/search",
     element: <SearchResult />,
+  },
+  {
+    path: "/order/success",
+    element: <SuccessOrder />,
+  },
+  {
+    path: "/orders",
+    element: <Orders />,
   },
 ]);
 

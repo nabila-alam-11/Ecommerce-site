@@ -323,7 +323,7 @@ async function createOrder(newOrder) {
     throw error;
   }
 }
-createOrder(newOrder);
+// createOrder(newOrder);
 app.post("/api/orders", async (req, res) => {
   try {
     const savedOrder = await createOrder(req.body);
@@ -352,11 +352,34 @@ async function readAllOrders() {
 async function deleteOrder(orderId) {
   try {
     const deletedOrder = await Order.findByIdAndDelete(orderId);
-    return deleteOrder;
+    return deletedOrder;
   } catch (error) {
     throw error;
   }
 }
+
+async function deleteAllOrders() {
+  try {
+    const deleteAllOrders = await Order.deleteMany({});
+    return deleteAllOrders;
+  } catch (error) {
+    console.error("Error deleting all orders:", error);
+
+    throw error;
+  }
+}
+
+app.delete("/api/orders", async (req, res) => {
+  try {
+    const result = await deleteAllOrders();
+    res
+      .status(200)
+      .json({ succes: true, message: `${result} Orders deleted!` });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Failed to delete orders." });
+  }
+});
 app.post("/api/orders", async (req, res) => {
   try {
     const savedOrder = await createOrder(req.body);

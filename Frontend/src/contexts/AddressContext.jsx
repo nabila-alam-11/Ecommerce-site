@@ -9,7 +9,7 @@ export default useAddressContext;
 
 export function AddressProvider({ children }) {
   const { data: addressData, loading } = useFetch(
-    "https://ecommerce-site-backend-virid.vercel.app/address"
+    "https://ecommerce-site-backend-virid.vercel.app/api/address"
   );
   const [addresses, setAddresses] = useState([]);
   const [editAddress, setEditAddress] = useState(null);
@@ -63,7 +63,7 @@ export function AddressProvider({ children }) {
   const createNewAddress = async (newAddressData) => {
     try {
       const response = await fetch(
-        "https://ecommerce-site-backend-virid.vercel.app/address",
+        "https://ecommerce-site-backend-virid.vercel.app/api/address",
         {
           method: "POST",
           headers: {
