@@ -186,7 +186,7 @@ async function createAddress(newAddress) {
   }
 }
 
-// createAddress(newAddress);
+createAddress(newAddress);
 
 app.post("/address", async (req, res) => {
   try {
