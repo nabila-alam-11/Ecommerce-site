@@ -56,11 +56,13 @@ const MyProfile = () => {
               />
               <h6 style={{ paddingLeft: "1rem" }}>Address</h6>
             </div>
-            <img
-              src={rightArrow}
-              style={{ width: "1.5rem" }}
-              alt="Right arrow"
-            />
+            <Link to="/checkout/address">
+              <img
+                src={rightArrow}
+                style={{ width: "1.5rem" }}
+                alt="Right arrow"
+              />
+            </Link>
           </div>
           <div
             style={{

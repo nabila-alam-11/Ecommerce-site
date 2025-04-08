@@ -8,8 +8,8 @@ import {
   faMoneyBill1,
   faRotateBack,
 } from "@fortawesome/free-solid-svg-icons";
-import ShimmerCategoryPage from "../components/ShimmerCategory";
 import useShopContext from "../contexts/ShopContext";
+import Footer from "../components/Footer";
 
 const ProductDetail = () => {
   const { toggleWishlist, wishlist, addToCart } = useShopContext();
@@ -37,19 +37,70 @@ const ProductDetail = () => {
             {productDetails && (
               <div className="d-flex bg-white p-4 gap-5">
                 <div style={{ width: "30%" }}>
-                  <img className="img-fluid" src={productDetails.img[0]} />
-                  <button
-                    className="btn btn-light mt-3 border"
-                    style={{ width: "27rem" }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleWishlist(productDetails._id);
-                    }}
+                  {/* {Carousel Start} */}
+                  <div
+                    id="productCarousel"
+                    className="carousel slide"
+                    data-bs-ride="carousel"
                   >
-                    {wishlist.includes(productDetails._id)
-                      ? "Remove from wishlist"
-                      : "Add to wishlist"}
-                  </button>
+                    <div className="carousel-inner">
+                      {productDetails.img.map((imgUrl, index) => (
+                        <div
+                          className={`carousel-item ${
+                            index === 0 ? "active" : ""
+                          }`}
+                        >
+                          <img
+                            className="img-fluid d-block w-100 img-fluid"
+                            src={imgUrl}
+                            alt={`Slide ${index + 1}`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <button
+                        className="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#productCarousel"
+                        data-bs-slide="prev"
+                      >
+                        <span
+                          className="carousel-control-prev-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="visually-hidden">Previous</span>
+                      </button>
+
+                      {/* Right Arrow */}
+                      <button
+                        className="carousel-control-next"
+                        type="button"
+                        data-bs-target="#productCarousel"
+                        data-bs-slide="next"
+                      >
+                        <span
+                          className="carousel-control-next-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                    {/* Carousel End */}
+                    {/* img */}
+                    <button
+                      className="btn btn-light mt-3 border"
+                      style={{ width: "27rem" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleWishlist(productDetails._id);
+                      }}
+                    >
+                      {wishlist.includes(productDetails._id)
+                        ? "Remove from wishlist"
+                        : "Add to wishlist"}
+                    </button>
+                  </div>
                   <br />
                   <button
                     className="btn btn-secondary my-3"
@@ -288,6 +339,7 @@ const ProductDetail = () => {
           </div>
         )}
       </main>
+      <Footer />
     </>
   );
 };

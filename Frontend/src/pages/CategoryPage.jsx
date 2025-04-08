@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import useFetch from "../useFetch";
 import ShimmerCategory from "../components/ShimmerCategory";
 import useShopContext from "../contexts/ShopContext";
+import Footer from "../components/Footer";
 
 const CategoryPage = () => {
   const { wishlist, toggleWishlist, addToCart } = useShopContext();

@@ -28,7 +28,7 @@ const App = () => {
       {categoryLoading ? (
         <Shimmer />
       ) : (
-        <main className="my-4" style={{ marginInline: "6rem" }}>
+        <main className="mt-4" style={{ marginInline: "6rem" }}>
           <div className="row my-4">
             {categories?.map((category) => (
               <div
