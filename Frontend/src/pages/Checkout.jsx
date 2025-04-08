@@ -65,18 +65,20 @@ const Checkout = () => {
     return acc + (product?.payment?.charges || 0);
   }, 0);
 
-  const totalQuantity = cart.reduce(
-    (acc, product) => acc + product.quantity,
-    0
-  );
   const totalAmount = totalPrice - totalDiscount + totalDeliveryCharges;
 
   return (
     <>
       <Nav />
+
       <main className="py-4 ps-4 pe-4" style={{ marginInline: "5rem" }}>
+        {loading && (
+          <div class="spinner-border text-danger my-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        )}
         <div className="d-flex gap-5">
-          {addresses?.length > 0 ? (
+          {addresses?.length > 0 && (
             <>
               <div style={{ width: "45%" }}>
                 <h3 className="mb-4">Select Delivery Address</h3>
@@ -204,7 +206,8 @@ const Checkout = () => {
                 </Link>
               </div>{" "}
             </>
-          ) : (
+          )}
+          {addresses?.length <= 0 && (
             <div style={{ width: "45%" }}>
               <button
                 className="text-danger new-address"

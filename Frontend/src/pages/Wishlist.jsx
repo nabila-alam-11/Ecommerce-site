@@ -25,7 +25,13 @@ const Wishlist = () => {
             • {wishlist.length} {wishlist.length > 1 ? "products" : "product"}
           </span>
         </h3>
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <div class="d-flex justify-content-center py-4">
+            <div class="spinner-border text-danger" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
         {successMessage && (
           <p className="p-2  bg-success-subtle text-success">
             Item removed from wishlist

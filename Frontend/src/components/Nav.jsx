@@ -2,6 +2,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useShopContext from "../contexts/ShopContext";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import profileIcon from "../assets/icons/userIcon.png";
+import AIRA from "../assets/images/AIRA.png";
 
 const Nav = () => {
   const { wishlist, cart, setSearchQuery } = useShopContext();
@@ -26,7 +28,7 @@ const Nav = () => {
           to="/"
           className="navbar-brand text-secondary-emphasis navbar-css"
         >
-          The Outfit Hub
+          <img src={AIRA} style={{ width: "11rem" }} />
         </Link>
         <button
           className="navbar-toggler"
@@ -45,7 +47,12 @@ const Nav = () => {
           </ul>
           <ul className="navbar-nav d-flex align-items-lg-center gap-4">
             <li className="nav-item">
-              <button className="btn btn-secondary">Login</button>
+              <Link to="/my/profile">
+                <img
+                  src={profileIcon}
+                  style={{ width: "2rem", color: "grey" }}
+                />
+              </Link>
             </li>
             <li
               className="nav-item text-secondary position-relative"

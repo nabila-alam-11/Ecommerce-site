@@ -2,6 +2,10 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import Nav from "./components/Nav";
 import Shimmer from "./components/Shimmer";
+import img1 from "../src/assets/images/main-img-1.jpg";
+import img2 from "../src/assets/images/main-img-2.jpg";
+import img3 from "../src/assets/images/main-img-3.jpg";
+import Footer from "./components/Footer";
 
 const App = () => {
   const {
@@ -47,17 +51,77 @@ const App = () => {
               </div>
             ))}
           </div>
-          <img
-            src="https://img.freepik.com/free-photo/two-young-beautiful-smiling-hipster-female-trendy-white-sweater-coat_158538-16941.jpg?t=st=1741624669~exp=1741628269~hmac=0e4b59a5cc1a0a9f7652e8deade08e85ff90522bb24d93019da8c4914f07c7ff&w=1380"
-            className="img-fluid cover mt-2 mb-4"
-            style={{
-              width: "100rem",
-              maxWidth: "100%",
-              height: "35rem",
-              maxHeight: "100%",
-              objectFit: "cover",
-            }}
-          />
+          <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img
+                  src={img3}
+                  className="img-fluid cover mt-2 mb-4"
+                  style={{
+                    width: "100rem",
+                    maxWidth: "100%",
+                    height: "35rem",
+                    maxHeight: "100%",
+                    objectFit: "cover",
+                  }}
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src={img2}
+                  className="img-fluid cover mt-2 mb-4"
+                  style={{
+                    width: "100rem",
+                    maxWidth: "100%",
+                    height: "35rem",
+                    maxHeight: "100%",
+                    objectFit: "cover",
+                  }}
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src={img1}
+                  className="img-fluid cover mt-2 mb-4"
+                  style={{
+                    width: "100rem",
+                    maxWidth: "100%",
+                    height: "35rem",
+                    maxHeight: "100%",
+                    objectFit: "cover",
+                  }}
+                  alt="..."
+                />
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
           <div className="row">
             <div className="col-12  col-lg-6 collection mb-3">
               <div className="d-flex">
@@ -108,6 +172,7 @@ const App = () => {
           </div>
         </main>
       )}
+      <Footer />
     </>
   );
 };

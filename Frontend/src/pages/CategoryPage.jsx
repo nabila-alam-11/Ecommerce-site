@@ -80,16 +80,6 @@ const CategoryPage = () => {
     brandsInput.forEach((input) => (input.checked = false));
     setFilterByBrand([]);
   };
-  // background: black;
-  //   color: white;
-  //   width: 12rem;
-  //   padding-inline: 5px;
-  //   text-align: center;
-  //   border-radius: 3px;
-  //   padding-block: 2px;
-  //   /* justify-self: end; */
-  //   justify-self: end;
-  //   margin-right: 1rem;
 
   return (
     <>

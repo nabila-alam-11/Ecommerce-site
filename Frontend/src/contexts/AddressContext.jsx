@@ -57,7 +57,7 @@ export function AddressProvider({ children }) {
       )
     );
     setEditAddress(null);
-    setNewAddress(updateAddress);
+    setNewAddress(updatedAddress);
   };
 
   const createNewAddress = async (newAddressData) => {
