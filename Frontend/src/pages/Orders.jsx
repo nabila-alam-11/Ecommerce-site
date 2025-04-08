@@ -11,23 +11,51 @@ const Orders = () => {
       <Nav />
       <main style={{ marginInline: "6rem" }} className="my-4">
         <h2 className="text-center">All Orders</h2>
-        <div className="my-4" style={{ marginInline: "15rem" }}>
+        {orders?.map((order) => (
           <div
-            style={{ background: "white", width: "70%" }}
-            className="d-flex gap-3"
+            className="my-4"
+            style={{ marginInline: "15rem" }}
+            key={order._id}
           >
-            <img
-              style={{ width: "5rem", height: "5rem", objectFit: "contain" }}
-              src="https://images.pexels.com/photos/30683099/pexels-photo-30683099/free-photo-of-casual-kid-s-fashion-in-studio-setting.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            />
-            <div>
-              <p>
-                <strong>Roadster</strong>
-              </p>
-              <p style={{ lineHeight: "0" }}>Blue Denim Jeans</p>
+            <div
+              style={{ background: "white", width: "100%" }}
+              className="d-flex flex-column gap-4 p-3 shadow-sm rounded"
+            >
+              {order.items.map((item, idx) => {
+                const product = item.product;
+                if (!product || Object.keys(product).length === 0) return null;
+
+                return (
+                  <div
+                    key={idx}
+                    className="d-flex align-items-center gap-4"
+                    style={{
+                      borderBottom: "1px solid #eee",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    <img
+                      src={product.img?.[0]}
+                      style={{
+                        width: "6rem",
+                        height: "6rem",
+                        objectFit: "cover",
+                        borderRadius: "0.5rem",
+                      }}
+                      alt={product.name}
+                    />
+                    <div>
+                      <p className="mb-1">
+                        <strong>{product.brand}</strong>
+                      </p>
+                      <p className="mb-0">{product.name}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
+        ))}
       </main>
     </>
   );

@@ -1,4 +1,5 @@
 import Nav from "../components/Nav";
+import { Link } from "react-router-dom";
 import Profile from "../assets/images/profile.png";
 import AddressImg from "../assets/images/postal-address.png";
 import rightArrow from "../assets/images/angle-small-right.png";
@@ -80,11 +81,13 @@ const MyProfile = () => {
               />
               <h6 style={{ paddingLeft: "1rem" }}>Order History</h6>
             </div>
-            <img
-              src={rightArrow}
-              style={{ width: "1.5rem" }}
-              alt="Right arrow"
-            />
+            <Link to="/orders">
+              <img
+                src={rightArrow}
+                style={{ width: "1.5rem" }}
+                alt="Right arrow"
+              />
+            </Link>
           </div>
           <div
             style={{
@@ -105,11 +108,13 @@ const MyProfile = () => {
               />
               <h6 style={{ paddingLeft: "1rem" }}>Wishlist</h6>
             </div>
-            <img
-              src={rightArrow}
-              style={{ width: "1.5rem" }}
-              alt="Right arrow"
-            />
+            <Link to="/wishlist">
+              <img
+                src={rightArrow}
+                style={{ width: "1.5rem" }}
+                alt="Right arrow"
+              />
+            </Link>
           </div>
           <div
             style={{

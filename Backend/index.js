@@ -293,7 +293,7 @@ const newOrder = {
   },
   items: [
     {
-      product: "67cd5240f4f190c8f37908d8", // product ObjectId
+      product: "67cd65ff1057d2145495207b", // product ObjectId
       quantity: 2,
       price: 299,
     },
