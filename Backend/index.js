@@ -188,7 +188,7 @@ async function createAddress(newAddress) {
 
 // createAddress(newAddress);
 
-app.post("/address", async (req, res) => {
+app.post("/api/address", async (req, res) => {
   try {
     const saveAddress = await createAddress(req.body);
     res.status(201).json({

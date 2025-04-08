@@ -93,7 +93,7 @@ export function AddressProvider({ children }) {
       console.log("Error creating address: ", error);
     }
   };
-
+  console.log(addresses);
   return (
     <AddressContext.Provider
       value={{
