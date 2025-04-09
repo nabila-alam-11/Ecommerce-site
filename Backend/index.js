@@ -48,19 +48,16 @@ app.post("/api/products", async (req, res) => {
   try {
     let { category, ...productData } = req.body;
 
-    // Check if the category exists in the database
     let existingCategory = await Category.findOne({ name: category });
 
-    // If the category does not exist, create it
     if (!existingCategory) {
       existingCategory = new Category({ name: category });
       await existingCategory.save();
     }
 
-    // Create a new product with the category ID
     const product = new Product({
       ...productData,
-      category: existingCategory._id, // Store category ID, not name
+      category: existingCategory._id,
     });
 
     await product.save();
@@ -145,7 +142,6 @@ app.get("/api/products/category:categoryName", async (req, res) => {
 
 app.post("/api/categories/:id", async (req, res) => {
   try {
-    // Find category by ID and update it
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -293,12 +289,12 @@ const newOrder = {
   },
   items: [
     {
-      product: "67cd65ff1057d2145495207b", // product ObjectId
+      product: "67cd65ff1057d2145495207b",
       quantity: 2,
       price: 299,
     },
     {
-      product: "67cd536cf4f190c8f37908db", // another product ObjectId
+      product: "67cd536cf4f190c8f37908db",
       quantity: 1,
       price: 499,
     },

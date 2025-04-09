@@ -79,7 +79,6 @@ export function AddressProvider({ children }) {
 
       const createdAddress = await response.json();
 
-      // Ensure new address has all required fields before updating state
       if (!createdAddress || !createdAddress._id || !createdAddress.fullName) {
         console.error("Invalid address response:", createdAddress);
         return;
@@ -87,7 +86,6 @@ export function AddressProvider({ children }) {
 
       setAddresses((prevAddresses) => [...prevAddresses, createdAddress]);
 
-      // Store the newly added address for external components
       setNewAddress(createdAddress);
     } catch (error) {
       console.log("Error creating address: ", error);

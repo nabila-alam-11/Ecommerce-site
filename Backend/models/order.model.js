@@ -13,7 +13,6 @@ const orderItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
-// Embedded Address Schema
 const embeddedAddressSchema = new mongoose.Schema(
   {
     fullName: String,
@@ -33,7 +32,7 @@ const embeddedAddressSchema = new mongoose.Schema(
 const orderSchema = new mongoose.Schema(
   {
     user: String,
-    address: embeddedAddressSchema, // ✅ Now accepts full address object
+    address: embeddedAddressSchema, 
     items: [orderItemSchema],
     totalPrice: Number,
     status: {

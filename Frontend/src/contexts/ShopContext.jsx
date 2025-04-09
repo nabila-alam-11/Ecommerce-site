@@ -79,7 +79,6 @@ export function ShopProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
 
-  // Store fetched data in state so it persists across pages
   useEffect(() => {
     if (categoriesData) setCategories(categoriesData);
   }, [categoriesData]);
@@ -96,7 +95,6 @@ export function ShopProvider({ children }) {
 
     query = query.toLowerCase().trim();
 
-    // Define category keywords mapping
     const categoryKeywords = {
       men: ["men", "man", "gent", "gents"],
       women: ["women", "woman", "lady", "ladies"],
@@ -105,28 +103,25 @@ export function ShopProvider({ children }) {
 
     let matchedCategory = null;
 
-    // Check if the query contains category keywords
     for (const category in categoryKeywords) {
       if (categoryKeywords[category].some((word) => query.includes(word))) {
-        matchedCategory = category; // Store category as lowercase
+        matchedCategory = category;
         break;
       }
     }
 
     let filtered = allProducts.filter((product) => {
       const productName = product.name.toLowerCase();
-      const productCategory = product.category.name.toLowerCase(); // Ensure category name is lowercase
+      const productCategory = product.category.name.toLowerCase();
 
       const nameMatches = query
         .split(" ")
         .some((word) => productName.includes(word));
 
       if (matchedCategory) {
-        // Ensure category name matches expected names from API
         return productCategory.includes(matchedCategory) && nameMatches;
       }
 
-      // If no category detected, search normally by product name
       return nameMatches;
     });
 
