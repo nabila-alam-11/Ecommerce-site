@@ -32,10 +32,7 @@ const embeddedAddressSchema = new mongoose.Schema(
 // Order Schema
 const orderSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    user: String,
     address: embeddedAddressSchema, // ✅ Now accepts full address object
     items: [orderItemSchema],
     totalPrice: Number,
