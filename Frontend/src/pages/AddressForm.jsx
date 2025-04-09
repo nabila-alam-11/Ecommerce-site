@@ -14,8 +14,7 @@ const AddressForm = ({ existingAddress, onClose }) => {
     pinCode: "",
     isDefault: false,
   });
-  console.log(formData);
-  // Autofill form when editing
+
   useEffect(() => {
     if (existingAddress) {
       setFormData(existingAddress);

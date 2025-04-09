@@ -1,11 +1,12 @@
 import { useState } from "react";
-import Nav from "../components/Nav";
-import useShopContext from "../contexts/ShopContext";
 import { Link } from "react-router-dom";
+import useShopContext from "../contexts/ShopContext";
+import Nav from "../components/Nav";
 
 const Cart = () => {
   const { cart, toggleWishlist, removeFromCart, wishlist, updateCartQuantity } =
     useShopContext();
+
   const totalPrice = cart?.reduce((acc, product) => {
     return product.discount
       ? acc +
@@ -35,8 +36,10 @@ const Cart = () => {
   );
   const totalAmount = totalPrice - totalDiscount + totalDeliveryCharges;
 
+  // Toast
   const [success, setSuccess] = useState(false);
   const [itemRemove, setItemRemove] = useState(false);
+
   return (
     <>
       <Nav />

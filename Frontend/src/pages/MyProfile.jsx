@@ -1,5 +1,5 @@
-import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
+import Nav from "../components/Nav";
 import Profile from "../assets/images/profile.png";
 import AddressImg from "../assets/images/postal-address.png";
 import rightArrow from "../assets/images/angle-small-right.png";

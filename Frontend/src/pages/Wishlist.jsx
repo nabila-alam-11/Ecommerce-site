@@ -1,20 +1,23 @@
 import { useState } from "react";
-import Nav from "../components/Nav";
-import useShopContext from "../contexts/ShopContext";
-import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
+import useFetch from "../useFetch";
+import useShopContext from "../contexts/ShopContext";
+import Nav from "../components/Nav";
 
 const Wishlist = () => {
-  const { wishlist, removeItemFromWishlist, addToCart } = useShopContext();
   const { data, loading } = useFetch(
     "https://ecommerce-site-backend-virid.vercel.app/api/products"
   );
-  const [success, setSuccess] = useState(false);
 
-  // Ensure wishlistProducts is always an array
+  const { wishlist, removeItemFromWishlist, addToCart } = useShopContext();
+
+  // Toast
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+
   const wishlistProducts =
     data?.filter((product) => wishlist.includes(product._id)) || [];
-  const [successMessage, setSuccessMessage] = useState(false);
+
   return (
     <>
       <Nav />

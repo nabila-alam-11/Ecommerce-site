@@ -1,23 +1,18 @@
 import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
-
-import Nav from "../components/Nav";
 import useFetch from "../useFetch";
-import ShimmerCategory from "../components/ShimmerCategory";
 import useShopContext from "../contexts/ShopContext";
-import Footer from "../components/Footer";
+import Nav from "../components/Nav";
+import ShimmerCategory from "../components/ShimmerCategory";
 
 const CategoryPage = () => {
-  const { wishlist, toggleWishlist, addToCart } = useShopContext();
-
   const { data: categoryData } = useFetch(
     `https://ecommerce-site-backend-virid.vercel.app/api/categories`
   );
-
   const { data: productData, loading: productLoading } = useFetch(
     `https://ecommerce-site-backend-virid.vercel.app/api/products`
   );
-
+  const { wishlist, toggleWishlist, addToCart } = useShopContext();
   const { categoryId } = useParams();
 
   const categoryDetail = categoryData?.find(
@@ -28,12 +23,11 @@ const CategoryPage = () => {
     (product) => product.category._id === categoryId
   );
 
+  // Filter and Sorting
   const [maxPrice, setMaxPrice] = useState(10200);
   const [minRating, setMinRating] = useState(0);
   const [sortByPrice, setSortByPrice] = useState("");
   const [filterByBrand, setFilterByBrand] = useState([]);
-  const [productAddededToCart, setProductAddedToCart] = useState(false);
-  const [productAddedToWishlist, setProductAddedToWishlist] = useState(true);
 
   const minProductPrice =
     productData?.length > 0
@@ -81,6 +75,9 @@ const CategoryPage = () => {
     brandsInput.forEach((input) => (input.checked = false));
     setFilterByBrand([]);
   };
+
+  // Toast
+  const [productAddededToCart, setProductAddedToCart] = useState(false);
 
   return (
     <>

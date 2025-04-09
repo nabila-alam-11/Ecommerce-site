@@ -6,12 +6,12 @@ import useShopContext from "../contexts/ShopContext";
 import AddressForm from "./AddressForm";
 
 const Checkout = () => {
-  const { data, loading } = useFetch(
+  const { loading } = useFetch(
     "https://ecommerce-site-backend-virid.vercel.app/api/address"
   );
+
   const { addresses, removeAddress, editAddress, selectEditAddress } =
     useAddressContext();
-  console.log(addresses);
 
   const [selectedAddress, setSelectedAddress] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);

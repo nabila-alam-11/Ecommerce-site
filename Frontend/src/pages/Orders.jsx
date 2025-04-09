@@ -5,7 +5,6 @@ const Orders = () => {
   const { data: orders, loading } = useFetch(
     "https://ecommerce-site-backend-virid.vercel.app/api/orders"
   );
-  console.log(orders);
   return (
     <>
       <Nav />

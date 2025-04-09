@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-import Nav from "../components/Nav";
 import useFetch from "../useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +8,7 @@ import {
   faRotateBack,
 } from "@fortawesome/free-solid-svg-icons";
 import useShopContext from "../contexts/ShopContext";
+import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
 const ProductDetail = () => {
@@ -18,6 +18,7 @@ const ProductDetail = () => {
   );
 
   const { productId } = useParams();
+
   const productDetails = data?.find((product) => product._id === productId);
   const discountedPrice = Math.round(
     productDetails?.price -
@@ -28,9 +29,11 @@ const ProductDetail = () => {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, num);
   };
+
   return (
     <>
       <Nav />
+      {error && <p>Error while fetaching Products.</p>}
       <main style={{ paddingInline: "8rem" }} className="my-4">
         {!loading ? (
           <div className="bg-white">
@@ -87,7 +90,7 @@ const ProductDetail = () => {
                       </button>
                     </div>
                     {/* Carousel End */}
-                    {/* img */}
+
                     <button
                       className="btn btn-light mt-3 border"
                       style={{ width: "27rem" }}
