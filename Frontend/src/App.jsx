@@ -1,11 +1,13 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useFetch from "./useFetch";
 import Nav from "./components/Nav";
 import Shimmer from "./components/Shimmer";
+import Footer from "./components/Footer";
 import img1 from "../src/assets/images/main-img-1.jpg";
 import img2 from "../src/assets/images/main-img-2.jpg";
 import img3 from "../src/assets/images/main-img-3.jpg";
-import Footer from "./components/Footer";
+import Eid from "../src/assets/images/eid.jpg";
+import Summer from "../src/assets/images/summer.jpg";
 
 const App = () => {
   const {
@@ -15,16 +17,11 @@ const App = () => {
   } = useFetch(
     `https://ecommerce-site-backend-virid.vercel.app/api/categories`
   );
-  const {
-    data: products,
-    error: productError,
-    loading: productLoading,
-  } = useFetch(
-    `https://ecommerce-site-backend-virid.vercel.app/api/categories`
-  );
+
   return (
     <>
       <Nav />
+      {categoryError && <p>Error while fetching products.</p>}
       {categoryLoading ? (
         <Shimmer />
       ) : (
@@ -126,7 +123,7 @@ const App = () => {
             <div className="col-12  col-lg-6 collection mb-3">
               <div className="d-flex">
                 <img
-                  src="https://img.freepik.com/free-photo/smiling-attractive-man-summer-clothes-holding-coconut-cocktail_171337-19030.jpg?t=st=1741670063~exp=1741673663~hmac=21b310fe654823754df82181c8374c078102c67798221963b250faf7ff8f9023&w=1380"
+                  src={Summer}
                   className="img-fluid pe-4"
                   style={{
                     width: "8rem",
@@ -149,7 +146,7 @@ const App = () => {
             <div className="col-12  col-lg-6 collection mb-3">
               <div className="d-flex">
                 <img
-                  src="https://img.freepik.com/free-photo/portrait-azeri-woman-traditional-dress-with-semeni-red_140725-148780.jpg?t=st=1741671851~exp=1741675451~hmac=373bc88c927bc81c122da3bfc01580b82bcaa9d4c6d58ac04133cf3cf58643f3&w=1380"
+                  src={Eid}
                   className="img-fluid pe-4"
                   style={{
                     width: "8rem",

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import useFetch from "../useFetch";
 import useAddressContext from "../contexts/AddressContext";
@@ -67,6 +66,50 @@ const Checkout = () => {
 
   const totalAmount = totalPrice - totalDiscount + totalDeliveryCharges;
 
+  const handleConfirmOrder = async () => {
+    const selectedAddrObj = addresses.find(
+      (addr) => addr.id === selectedAddress
+    );
+
+    const orderItems = cart?.map((product) => ({
+      product: product._id,
+      quantity: product.quantity,
+      price: product.discount
+        ? Math.round(product.price - (product.price * product.discount) / 100)
+        : product.price,
+    }));
+
+    const userName = selectedAddress.fullName;
+    const orderPayload = {
+      user: userName,
+      address: selectedAddrObj,
+      items: orderItems,
+      totalPrice: totalAmount,
+    };
+
+    try {
+      const res = await fetch(
+        "https://ecommerce-site-backend-virid.vercel.app/api/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderPayload),
+        }
+      );
+      if (res.ok) {
+        window.location.href = "/order/success";
+      } else {
+        const errorData = await res.json();
+        console.error("Order failed:", errorData);
+        alert("Order failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error placing order:", err);
+      alert("Something went wrong while placing the order.");
+    }
+  };
   return (
     <>
       <Nav />
@@ -196,14 +239,13 @@ const Checkout = () => {
                 </div>
                 <hr />
                 <p>You will save ₹{totalDiscount} on this order</p>
-                <Link to="/order/success">
-                  <button
-                    className="btn btn-primary"
-                    style={{ width: "100%", letterSpacing: "1px" }}
-                  >
-                    CONFIRM ORDER
-                  </button>
-                </Link>
+                <button
+                  className="btn btn-primary"
+                  style={{ width: "100%", letterSpacing: "1px" }}
+                  onClick={handleConfirmOrder}
+                >
+                  CONFIRM ORDER
+                </button>
               </div>{" "}
             </>
           )}
