@@ -91,41 +91,13 @@ export function ShopProvider({ children }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const filterProducts = (query) => {
-    if (!allProducts.length) return;
-
-    query = query.toLowerCase().trim();
-
-    const categoryKeywords = {
-      men: ["men", "man", "gent", "gents"],
-      women: ["women", "woman", "lady", "ladies"],
-      kids: ["kids", "kid", "children", "boys", "girls"],
-    };
-
-    let matchedCategory = null;
-
-    for (const category in categoryKeywords) {
-      if (categoryKeywords[category].some((word) => query.includes(word))) {
-        matchedCategory = category;
-        break;
-      }
-    }
-
-    let filtered = allProducts.filter((product) => {
-      const productName = product.name.toLowerCase();
-      const productCategory = product.category.name.toLowerCase();
-
-      const nameMatches = query
-        .split(" ")
-        .some((word) => productName.includes(word));
-
-      if (matchedCategory) {
-        return productCategory.includes(matchedCategory) && nameMatches;
-      }
-
-      return nameMatches;
-    });
-
-    setFilteredProducts(filtered);
+    const lowerCaseQuery = query.toLowerCase();
+    const results = allProducts.filter(
+      (product) =>
+        product.name.toLowerCase().includes(lowerCaseQuery) ||
+        product.category.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredProducts(results);
   };
 
   return (
