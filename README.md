@@ -68,9 +68,20 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 - Displays a **More items you may like** section featuring related or recommended products:
   - Each item shows image, rating, name, price, discount, a wishlist icon and an **Add to Cart** button
 
-**Wislist**
+**Wishlist Page**
 
-- Displays all products which are wishlisted by user
+- Displays all products that have been added to the wishlist
 - Each product shows image, rating, brand, product name, original price, discounted price, and discounted percentage.
 - Includes a **Move to Cart** button to add the item directly to the shopping cart.
 - An **X icon** is provided on each product to remove the item from the wishlist.
+
+**Cart Page**
+
+- Displays all the products that have been added to the shopping cart.
+- Each product shows the image, rating, brand, product name, original price, discounted price, and discounted percentage.
+- Quantity can be increased and decreased
+- Includes a **Move to Wishlist** button to add the item directly to the wishlist
+- An **X icon** is provided on each product card to remove the item from the cart.
+- **Price Details** section displays:
+  - Price of all items in the cart, discount, and delivery charges(if any) and the total amount.
+  - Includes a **PLACE ORDER** button that navigates to the **Checkout Page**
