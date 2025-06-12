@@ -52,7 +52,7 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 **Product Listing Page**
 
 - Displays all products within the selected category
-- Each product shows the brand name, product name, rating, original price, discounted price and discounted percentage.
+- Each product shows the product image, brand name, product name, rating, original price, discounted price and discounted percentage.
 - Clicking on the wishlist icon adds or removes the product from the wishlist
 - Clicking on the **Add to Cart** button adds the product to the cart
 - Filter products by brand, rating, and price range
@@ -60,8 +60,17 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 
 **Product Details Page**
 
-- View complete product information: product name, brand, rating, discounted price, original price, discount percentage, description, quantity, and size
+- View complete product information: product image, product name, brand, rating, discounted price, original price, discount percentage, description, available quantity, and size
 - The **Add to Wishlist** button functions as a toggle:
   - If the product is not in the wishlist, it shows **Add to Wishlist**
   - If the product is already in the wishlist, it shows **Remove from Wishlist**
 - Clicking the **Add to Bag** button adds the product to the shopping cart
+- Displays a **More items you may like** section featuring related or recommended products:
+  - Each item shows image, rating, name, price, discount, a wishlist icon and an **Add to Cart** button
+
+**Wislist**
+
+- Displays all products which are wishlisted by user
+- Each product shows image, rating, brand, product name, original price, discounted price, and discounted percentage.
+- Includes a **Move to Cart** button to add the item directly to the shopping cart.
+- An **X icon** is provided on each product to remove the item from the wishlist.
