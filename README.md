@@ -57,3 +57,11 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 - Clicking on the **Add to Cart** button adds the product to the cart
 - Filter products by brand, rating, and price range
 - Sort products by price (low to high or high to low)
+
+**Product Details Page**
+
+- View complete product information: product name, brand, rating, discounted price, original price, discount percentage, description, quantity, and size
+- The **Add to Wishlist** button functions as a toggle:
+  - If the product is not in the wishlist, it shows **Add to Wishlist**
+  - If the product is already in the wishlist, it shows **Remove from Wishlist**
+- Clicking the **Add to Bag** button adds the product to the shopping cart
