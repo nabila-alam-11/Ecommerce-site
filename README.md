@@ -50,3 +50,8 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 - Search for products by name
 
 **Product Listing Page**
+
+- Displays all products of the respective category
+- Each product shows brand name, product name, rating, original price, discounted price and discount.
+- Clicking on wishlist icon adds or removes product from the wishlist
+- Clicking on **Add to Cart** button adds the product to the cart
