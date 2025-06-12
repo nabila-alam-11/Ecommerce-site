@@ -51,7 +51,9 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 
 **Product Listing Page**
 
-- Displays all products of the respective category
-- Each product shows brand name, product name, rating, original price, discounted price and discount.
-- Clicking on wishlist icon adds or removes product from the wishlist
-- Clicking on **Add to Cart** button adds the product to the cart
+- Displays all products within the selected category
+- Each product shows the brand name, product name, rating, original price, discounted price and discounted percentage.
+- Clicking on the wishlist icon adds or removes the product from the wishlist
+- Clicking on the **Add to Cart** button adds the product to the cart
+- Filter products by brand, rating, and price range
+- Sort products by price (low to high or high to low)
