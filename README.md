@@ -1,7 +1,6 @@
 # AIRA - An eCommerce Application
 
-A full-stack clothing e-commerce application featuring product filtering, sorting, cart and wishlist management, address handling, browsing and search functionality.
-
+A full-stack clothing e-commerce application featuring product filtering, sorting, cart and wishlist management, address handling, browsing and search functionality.<br>
 Built with a React frontend, Express/Node.js backend, MongoDB database, Boostrap for styling.
 
 ---
@@ -31,13 +30,14 @@ npm run dev
 - Node JS
 - Express
 - MongoDB
+- Bootstrap
 
 ---
 
 ## Demo Video
 
 Watch a walkthrough (7 minutes) of all the major features of this app:
-[Loom Video]()
+[Video]()
 
 ---
 
@@ -149,7 +149,7 @@ Details of a single product by its ID<br>
 Sample Response:<br>
 
 ```
-[{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
+{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}
 ```
 
 ### **GET /api/products/category/:categoryName**<br>
@@ -158,7 +158,7 @@ Fetches all products that belong to a specifice category<br>
 
 **Parameters**
 
-- **categoryName** : The name of the category(e.g., Kids, Men, Women)
+- **categoryName** : The name of the category(e.g., Kids, Men, Women)<br>
   Sample Response:<br>
 
 ```
@@ -218,3 +218,47 @@ Sample Request:<br>
 ```
 {_id, address, items, totalPrice, status}
 ```
+
+### **POST /api/categories/:id**<br>
+
+Updates a category with the specified id<br>
+Sample Request: <br>
+
+```
+{name, img}
+```
+
+### **PUT /address/:addressId**<br>
+
+Updates a address with the specified id<br>
+Sample Request: <br>
+
+```
+{fullname, phoneNumber, email, street, landmark, city, state, pinCode, isDefault}
+```
+
+### **DELETE /api/categories/:id**<br>
+
+Deletes a category with the specified id
+
+### **DELETE /api/products/:id**<br>
+
+Deletes a product with the specified id
+
+### **DELETE /api/address/:addressId**<br>
+
+Deletes an address with the specified id
+
+### **DELETE /api/orders/:orderId**<br>
+
+Deletes an order with the specified id
+
+### **DELETE /api/orders**<br>
+
+Deletes all orders
+
+---
+
+## Contact
+
+For bugs or feature request, please reach out to nabilazaheer1198@gmail.com
