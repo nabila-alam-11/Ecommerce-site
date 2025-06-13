@@ -165,15 +165,6 @@ Fetches all products that belong to a specifice category<br>
 [{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
 ```
 
-### **GET /api/address**<br>
-
-Details of a single product by its ID<br>
-Sample Response:<br>
-
-```
-[{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
-```
-
 ## **GET /api/address**<br>
 
 Retrieves all saved addresses<br>
