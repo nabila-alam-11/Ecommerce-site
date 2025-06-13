@@ -152,11 +152,42 @@ Sample Response:<br>
 [{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
 ```
 
-### **GET /api/products/category:categoryName**<br>
+### **GET /api/products/category/:categoryName**<br>
+
+Fetches all products that belong to a specifice category<br>
+
+**Parameters**
+
+- **categoryName** : The name of the category(e.g., Kids, Men, Women)
+  Sample Response:<br>
+
+```
+[{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
+```
+
+### **GET /api/address**<br>
 
 Details of a single product by its ID<br>
 Sample Response:<br>
 
 ```
 [{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
+```
+
+## **GET /api/address**<br>
+
+Retrieves all saved addresses<br>
+Sample Response:<br>
+
+```
+[{_id, fullName, email, phoneNumber, street, landmark, city, state, pinCode, isDefault, createdAt, updatedAt}....]
+```
+
+## **GET /api/orders**<br>
+
+Fetches all orders<br>
+Sample Response:<br>
+
+```
+[{_id, address, items, totalPrice, status, createdAt, updatedAt},....]
 ```
