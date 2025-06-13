@@ -165,7 +165,7 @@ Fetches all products that belong to a specifice category<br>
 [{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
 ```
 
-## **GET /api/address**<br>
+### **GET /api/address**<br>
 
 Retrieves all saved addresses<br>
 Sample Response:<br>
@@ -174,11 +174,29 @@ Sample Response:<br>
 [{_id, fullName, email, phoneNumber, street, landmark, city, state, pinCode, isDefault, createdAt, updatedAt}....]
 ```
 
-## **GET /api/orders**<br>
+### **GET /api/orders**<br>
 
 Fetches all orders<br>
 Sample Response:<br>
 
 ```
 [{_id, address, items, totalPrice, status, createdAt, updatedAt},....]
+```
+
+### **POST /api/categories**<br>
+
+Creates a new product category.<br>
+Sample Response:<br>
+
+```
+{name, img}
+```
+
+### **POST /api/products**<br>
+
+Creates a new product<br>
+Sample Request:<br>
+
+```
+{name, price, category, brand, size, rating, description, discount, isReturnable, isNewArrival, securePayment, img}
 ```
