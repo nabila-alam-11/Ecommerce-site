@@ -200,3 +200,21 @@ Sample Request:<br>
 ```
 {name, price, category, brand, size, rating, description, discount, isReturnable, isNewArrival, securePayment, img}
 ```
+
+### **POST /api/address**<br>
+
+Creates a new address<br>
+Sample Request:<br>
+
+```
+{fullName, email, phoneNumber, street, landmark, city, state, pinCode, isDefault}
+```
+
+### **POST /api/orders**<br>
+
+Creates a new order<br>
+Sample Request:<br>
+
+```
+{_id, address, items, totalPrice, status}
+```
