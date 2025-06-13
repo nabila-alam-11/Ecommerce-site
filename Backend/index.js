@@ -121,7 +121,7 @@ app.get("/api/products/:productId", async (req, res) => {
   }
 });
 
-app.get("/api/products/category:categoryName", async (req, res) => {
+app.get("/api/products/category/:categoryName", async (req, res) => {
   try {
     const category = await Category.findOne({ name: req.params.categoryName });
     if (!category) {

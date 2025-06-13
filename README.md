@@ -85,3 +85,78 @@ Watch a walkthrough (7 minutes) of all the major features of this app:
 - **Price Details** section displays:
   - Price of all items in the cart, discount, and delivery charges(if any) and the total amount.
   - Includes a **PLACE ORDER** button that navigates to the **Checkout Page**
+
+**Checkout Page**
+
+- Allows adding multiple delivery addresses using the **+ Add New Address** button
+- A new address form collects:
+  - Full Name
+  - Phone Number
+  - Email
+  - Street
+  - Landmark
+  - City
+  - State
+  - Pin Code
+- Each saved address can be:
+  - **Edited** using the **Edit** button
+  - **Deleted** using the **Remove** button
+- Displays a **Price Details** section showing the item total, discount, delivery charges, and final amount
+- Includes a **Confirm Order** button to place the order with the selected delivery address
+
+**Profile Page**
+
+- Contains three main sections:
+  - **Address**: View, add, edit, or remove saved delivery addresses
+  - **Order History**: View all previously placed orders with their details
+  - **Wishlist**: View and manage all wishlisted products
+- Each section is navigable via clickable tabs
+
+---
+
+## API Reference
+
+### **GET /api/products**<br>
+
+List all products<br>
+Sample Response:<br>
+
+```
+[{_id, name, price, category, brand, size, rating, description, discount, isReturnable, isNewArrival, securePayment, img}, ....]
+```
+
+### **GET /api/categories**<br>
+
+List all categories<br>
+Sample Response:<br>
+
+```
+[{_id, name,img}, ....]
+```
+
+### **GET /api/categories/:id**<br>
+
+Details of a single category by its ID<br>
+Sample Response:<br>
+
+```
+{_id, name,img}
+```
+
+### **GET /api/products/:productId**<br>
+
+Details of a single product by its ID<br>
+Sample Response:<br>
+
+```
+[{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
+```
+
+### **GET /api/products/category:categoryName**<br>
+
+Details of a single product by its ID<br>
+Sample Response:<br>
+
+```
+[{_id, name, price,img, size, rating, description, category, discount, isReturnable, returnPeriod, isNewArrival, brand,securePayment, img}....]
+```
