@@ -7,7 +7,7 @@ Built with a React frontend, Express/Node.js backend, MongoDB database, Boostrap
 
 ## Demo Link
 
-[🌐 Live Demo] (https://ecommerce-site-mocha-gamma.vercel.app?tab=readme-ov-file)
+[Live Demo](https://ecommerce-site-mocha-gamma.vercel.app?tab=readme-ov-file)
 
 ---
 
